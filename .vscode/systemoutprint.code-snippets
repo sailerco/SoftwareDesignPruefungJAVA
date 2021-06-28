@@ -1,0 +1,7 @@
+{
+	"SystemOutPrint": {
+	  "prefix": ["sys", "Syste"],
+	  "body": ["System.out.println()"],
+	  "description": "A for loop."
+	}
+  }

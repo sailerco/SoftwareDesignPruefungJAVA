@@ -1,0 +1,62 @@
+[
+    {
+        "endDate": "30.06.2021",
+        "questions": [
+            {
+                "answers": {
+                    "3_answer": "divers",
+                    "2_answer": "female",
+                    "4_answer": "don't wanna say",
+                    "1_answer": "male"
+                },
+                "title": "What's your gender?"
+            },
+            {
+                "answers": {
+                    "3_answer": "35-50",
+                    "2_answer": "18 - 35",
+                    "4_answer": ">50",
+                    "1_answer": "<18"
+                },
+                "title": "Age?"
+            },
+            {
+                "answers": {
+                    "3_answer": "5",
+                    "2_answer": "idk",
+                    "1_answer": "42"
+                },
+                "title": "What's idk?"
+            }
+        ],
+        "title": "survey",
+        "startDate": "28.06.2021",
+        "username": "username",
+        "dateOfCreation": "27.06.2021"
+    },
+    {
+        "endDate": "13.07.2021",
+        "questions": [
+            {
+                "answers": {
+                    "3_answer": "qweqwe",
+                    "2_answer": "aaa",
+                    "4_answer": "qwe",
+                    "1_answer": "test"
+                },
+                "title": "test"
+            },
+            {
+                "answers": {
+                    "2_answer": "qwen",
+                    "1_answer": "qew"
+                },
+                "title": "q12313"
+            }
+        ],
+        "title": "xxx",
+        "startDate": "11.07.2021",
+        "username": "123",
+        "dateOfCreation": "Mon Jun 28 00:00:00 CEST 2021"
+    }
+]

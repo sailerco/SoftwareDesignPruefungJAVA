@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class GuestUser implements User{
     public int userID;
 
@@ -8,4 +10,8 @@ public class GuestUser implements User{
     public void searchSurveys(){};
 
     public void chooseSurvey(){};
+
+    public void setUserID(){
+        this.userID = 1;
+    }
 }

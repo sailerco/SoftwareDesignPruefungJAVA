@@ -1,0 +1,35 @@
+[
+    {
+        "title": "survey",
+        "author": "username",
+        "questions": [
+            {
+                "title": "What's your gender?",
+                "answers": {
+                    "1_answer": "1",
+                    "2_answer": "2",
+                    "3_answer": "6",
+                    "4_answer": "1"
+                }
+            },
+            {
+                "title": "Age?",
+                "answers": {
+                    "1_answer": "5",
+                    "2_answer": "1",
+                    "3_answer": "3",
+                    "4_answer": "4"
+                }
+            },
+            {
+                "title": "What's idk?",
+                "answers": {
+                    "1_answer": "5",
+                    "2_answer": "5",
+                    "3_answer": "5",
+                    "4_answer": "5"
+                }
+            }
+        ]
+    }
+]
