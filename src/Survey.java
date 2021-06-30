@@ -68,7 +68,7 @@ public class Survey {
 
     public void finishSurvey() {
         printSurvey();
-        saveData();
+        Data.saveSurveyData(this.title, this.author, this.currentDate, this.startDate, this.endDate, questionArray);
     }
 
     public void setTitle(String title) {
@@ -76,58 +76,27 @@ public class Survey {
     }
 
     public void chooseSurvey() {
-    }
-
-    public String search(String titleSearch) {
         // Search
         Scanner sc = new Scanner(System.in);
         try {
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(new FileReader("data/survey.json"));
             JSONArray jsonObject = (JSONArray) obj;
-            int numberOfMatch = 0;
+            int surveyNumbers = jsonObject.size();
+            if(jsonObject.size() > 9)
+                surveyNumbers = 10;
             ArrayList<String> titleThatMatched = new ArrayList<String>();
             for (int i = 0; i <= jsonObject.size() - 1; i++) {
                 JSONObject survey = (JSONObject) jsonObject.get(i);
-                String titleToMatch = (String) survey.get("title");
-                if (titleToMatch.startsWith(titleSearch)) {
-                    if (numberOfMatch == 0)
-                        System.out.println("Choose if you want to play");
-                    numberOfMatch++;
-                    System.out.format(
-                            numberOfMatch + ") " + survey.get("title") + "\t \t (by " + survey.get("author") + ")\n");
-                    titleThatMatched.add(titleToMatch);
-                }
-                if (numberOfMatch != 0 && i == jsonObject.size() - 1) {
-                    System.out.println(numberOfMatch + 1 + ") Search again");
-                    System.out.println(numberOfMatch + 2 + ") Go back to menu");
-                }
+                System.out.println(i+1 + ") " + survey.get("title"));
+                System.out.format("\t \t (Avaible from " + survey.get("startDate") + " - " + survey.get("endDate") + " | by " + survey.get("username") + ")\n");  
             }
-            if (numberOfMatch == 0) {
-                System.out.println("No Survey found. Do you wanna search again?");
-                System.out.println("1) Search Again");
-                System.out.println("2) Go back to menu");
-                int search = sc.nextInt();
-                if (search == 1) {
-                    return null; // hier muss ich etwas anderes zurück geben
-                } else {
-                    return null; // return again
-                }
-            } else {
-                int search = sc.nextInt();
-                if (search == titleThatMatched.size() + 1) // search again
-                    return null;
-                else if (search == titleThatMatched.size() + 2) // return to Menu
-                    return null;
-                else
-                    return titleThatMatched.get(search);
-            }
+            int choose = sc.nextInt();
         } catch (Exception e) {
             // TODO: handle exception
         }
-        return null;
+        //return null;
     }
-
     public boolean validateDate(Date currentDate, String startDate, String endDate) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
@@ -167,7 +136,8 @@ public class Survey {
     }
 
     public void saveData() {
-        try {
+        Data.saveSurveyData(this.title, this.author, this.currentDate, this.startDate, this.endDate, questionArray);
+        /* try {
             JSONParser parser = new JSONParser();
             Object obj;
             obj = parser.parse(new FileReader("data/survey.json"));
@@ -203,7 +173,7 @@ public class Survey {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        } */
 
     }
 

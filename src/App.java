@@ -55,13 +55,12 @@ public class App {
                 break;
             case 2:
                 Survey existingSurvey = new Survey();
-                existingSurvey.createSurvey();
+                existingSurvey.chooseSurvey();
                 break;
             case 3:
                 System.out.print("Search... ");
                 String search = sc.nextLine();
-                Survey searchingSurvey = new Survey();
-                searchingSurvey.search(search);
+                Data.searchSurvey(search);
                 break;
             case 4:
                 break;
@@ -87,8 +86,7 @@ public class App {
                 Scanner scanner = new Scanner(System.in);
                 System.out.print("search: ");
                 String search = scanner.nextLine();
-                Survey searchingSurvey = new Survey();
-                String s = searchingSurvey.search(search);
+                String s = Data.searchSurvey(search);
                 if (s == null) {
                     guestMenu();
                 }
