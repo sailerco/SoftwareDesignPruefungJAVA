@@ -1,12 +1,11 @@
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
 
 public class Survey {
     public String title;
@@ -65,38 +64,24 @@ public class Survey {
             return addMore("Questions");
         }
     }
-
+    
+    public static boolean addMore(String type) {    
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Do you want to add more " + type + "? Enter Y or N ");
+        String yesOrNo = sc.nextLine();
+        if (yesOrNo.equalsIgnoreCase("N"))
+            return false;
+        else
+            return true;
+    }
+    
     public void finishSurvey() {
         printSurvey();
-        Data.saveSurveyData(this.title, this.author, this.currentDate, this.startDate, this.endDate, questionArray);
-    }
+        Data.saveSurveyData(this.title, this.author, this.currentDate, this.startDate, this.endDate, questionArray, "survey.json");
 
-    public void setTitle(String title) {
-        this.title = title;
+        Data.saveSurveyData(this.title, this.author, this.currentDate, this.startDate, this.endDate, questionArray, "surveyStats.json");
     }
-
-    public void chooseSurvey() {
-        // Search
-        Scanner sc = new Scanner(System.in);
-        try {
-            JSONParser parser = new JSONParser();
-            Object obj = parser.parse(new FileReader("data/survey.json"));
-            JSONArray jsonObject = (JSONArray) obj;
-            int surveyNumbers = jsonObject.size();
-            if(jsonObject.size() > 9)
-                surveyNumbers = 10;
-            ArrayList<String> titleThatMatched = new ArrayList<String>();
-            for (int i = 0; i <= jsonObject.size() - 1; i++) {
-                JSONObject survey = (JSONObject) jsonObject.get(i);
-                System.out.println(i+1 + ") " + survey.get("title"));
-                System.out.format("\t \t (Avaible from " + survey.get("startDate") + " - " + survey.get("endDate") + " | by " + survey.get("username") + ")\n");  
-            }
-            int choose = sc.nextInt();
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-        //return null;
-    }
+ 
     public boolean validateDate(Date currentDate, String startDate, String endDate) {
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
@@ -135,55 +120,24 @@ public class Survey {
         }
     }
 
-    public void saveData() {
-        Data.saveSurveyData(this.title, this.author, this.currentDate, this.startDate, this.endDate, questionArray);
-        /* try {
-            JSONParser parser = new JSONParser();
-            Object obj;
-            obj = parser.parse(new FileReader("data/survey.json"));
-            JSONArray jsonObject = (JSONArray) obj; // read already existing data
-            // insert new data
-            JSONObject surveyObject = new JSONObject();
-            surveyObject.put("title", this.title);
-            surveyObject.put("username", this.author);
-            surveyObject.put("dateOfCreation", this.currentDate);
-            surveyObject.put("startDate", this.startDate);
-            surveyObject.put("endDate", this.endDate);
-            JSONArray questions = new JSONArray();
-            for (Questions q : questionArray) {
-                int x = 1;
-                JSONObject questionBlock = new JSONObject();
-                JSONObject answerBlock = new JSONObject();
-                questionBlock.put("title", q.questionTitle);
-
-                for (String answer : q.array) {
-                    answerBlock.put(x + "_answer", answer);
-                    x++;
-                }
-                questionBlock.put("answers", answerBlock);
-                questions.add(questionBlock);
-            }
-            surveyObject.put("questions", questions);
-            jsonObject.add(surveyObject);
-            try (FileWriter file = new FileWriter("data/survey.json")) {
-                file.write(jsonObject.toJSONString());
-                System.out.println("Data were successfully saved");
-            } catch (IOException e) {
-                System.out.println("Error initializing stream  ");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } */
-
-    }
-
-    public static boolean addMore(String type) {
+    public void takeSurvey(int surveyNumber){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Do you want to add more " + type + "? Enter Y or N ");
-        String yesOrNo = sc.nextLine();
-        if (yesOrNo.equalsIgnoreCase("N"))
-            return false;
-        else
-            return true;
+        JSONObject choosenSurvey = Data.getSurvey(surveyNumber);
+        JSONArray allQuestions = (JSONArray)choosenSurvey.get("questions");
+        ArrayList<Integer> saveForStats = new ArrayList<Integer>();
+        for(int i = 0; i <= allQuestions.size()-1; i++){ //iterate through all questions
+            JSONObject question = (JSONObject)allQuestions.get(i);
+            JSONObject answers = (JSONObject)question.get("answers");
+            System.out.println(question.get("title"));
+            for(int a = 0; a <= answers.size()-1; a++){
+                System.out.println(a+1 + " ) " + answers.get( a+1 + "_answer"));
+            }
+            int choose = sc.nextInt();
+            saveForStats.add(choose);
+        }
+        Data.saveSurveyStats(surveyNumber, saveForStats);
+    }
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

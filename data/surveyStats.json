@@ -1,35 +1,158 @@
 [
     {
-        "title": "survey",
-        "author": "username",
+        "endDate": "30.06.2021",
         "questions": [
             {
-                "title": "What's your gender?",
                 "answers": {
-                    "1_answer": "1",
-                    "2_answer": "2",
-                    "3_answer": "6",
-                    "4_answer": "1"
-                }
+                    "3_answer": 2,
+                    "2_answer": 1,
+                    "4_answer": 3,
+                    "1_answer": 3
+                },
+                "title": "What's your gender?"
             },
             {
-                "title": "Age?",
                 "answers": {
-                    "1_answer": "5",
-                    "2_answer": "1",
-                    "3_answer": "3",
-                    "4_answer": "4"
-                }
+                    "3_answer": 2,
+                    "2_answer": 2,
+                    "4_answer": 1,
+                    "1_answer": 2
+                },
+                "title": "Age?"
             },
             {
-                "title": "What's idk?",
                 "answers": {
-                    "1_answer": "5",
-                    "2_answer": "5",
-                    "3_answer": "5",
-                    "4_answer": "5"
-                }
+                    "3_answer": 5,
+                    "2_answer": 2,
+                    "1_answer": 2
+                },
+                "title": "What's idk?"
             }
-        ]
+        ],
+        "title": "survey",
+        "startDate": "28.06.2021",
+        "username": "username",
+        "dateOfCreation": "27.06.2021"
+    },
+    {
+        "endDate": "13.07.2021",
+        "questions": [
+            {
+                "answers": {
+                    "3_answer": 1,
+                    "2_answer": 3,
+                    "4_answer": 2,
+                    "1_answer": 2
+                },
+                "title": "test"
+            },
+            {
+                "answers": {
+                    "2_answer": 1,
+                    "1_answer": 7
+                },
+                "title": "q12313"
+            }
+        ],
+        "title": "xxx",
+        "startDate": "11.07.2021",
+        "username": "123",
+        "dateOfCreation": "Mon Jun 28 00:00:00 CEST 2021"
+    },
+    {
+        "endDate": "35.06.2021",
+        "questions": [
+            {
+                "answers": {
+                    "3_answer": 4,
+                    "2_answer": 4,
+                    "4_answer": 4,
+                    "1_answer": 4
+                },
+                "title": "wake up?"
+            },
+            {
+                "answers": {
+                    "3_answer": 3,
+                    "2_answer": 5,
+                    "4_answer": 8,
+                    "1_answer": 0
+                },
+                "title": "go to sleep?"
+            }
+        ],
+        "title": "When should I...?",
+        "startDate": "30.06.2021",
+        "username": "Jonas",
+        "dateOfCreation": "Wed Jun 30 00:00:00 CEST 2021"
+    },
+    {
+        "endDate": "30.07.2021",
+        "questions": [
+            {
+                "answers": {
+                    "2_answer": 0,
+                    "1_answer": 8
+                },
+                "title": "Cat, Yes\/No?"
+            },
+            {
+                "answers": {
+                    "2_answer": 4,
+                    "1_answer": 4
+                },
+                "title": "Best name for a cat?"
+            }
+        ],
+        "title": "Katze",
+        "startDate": "1.07.2021",
+        "username": "Jonas",
+        "dateOfCreation": "Wed Jun 30 00:00:00 CEST 2021"
+    },
+    {
+        "endDate": "12.08.2021",
+        "questions": [
+            {
+                "answers": {
+                    "2_answer": 0,
+                    "1_answer": 1
+                },
+                "title": "1233"
+            },
+            {
+                "answers": {
+                    "2_answer": 1,
+                    "1_answer": 0
+                },
+                "title": "123455"
+            }
+        ],
+        "title": "YOOOOOOO",
+        "startDate": "12.07.2021",
+        "username": "Jonas",
+        "dateOfCreation": "Thu Jul 08 00:00:00 CEST 2021"
+    },
+    {
+        "endDate": "13.07.2021",
+        "questions": [
+            {
+                "answers": {
+                    "2_answer": 0,
+                    "1_answer": 0
+                },
+                "title": "123123"
+            },
+            {
+                "answers": {
+                    "2_answer": 0,
+                    "1_answer": 0
+                },
+                "title": "wqeq"
+            }
+        ],
+        "title": "111",
+        "startDate": "13.07.2021",
+        "username": "Jonas",
+        "dateOfCreation": "Thu Jul 08 00:00:00 CEST 2021"
     }
 ]

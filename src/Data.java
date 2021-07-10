@@ -23,7 +23,9 @@ public class Data {
                     if (numberOfMatch == 0)
                         System.out.println("Choose if you want to play");
                     numberOfMatch++;
-                    System.out.format(numberOfMatch + ") " + survey.get("title") + "\t \t (by " + survey.get("username") + ")\n");
+                    System.out.println(i + 1 + ") " + survey.get("title"));
+                    System.out.format("\t \t (Avaible from " + survey.get("startDate") + " - " + survey.get("endDate")
+                            + " | by " + survey.get("username") + ")\n");
                     titleThatMatched.add(titleToMatch);
                 }
                 if (numberOfMatch != 0 && i == jsonObject.size() - 1) {
@@ -55,14 +57,52 @@ public class Data {
         }
         return null;
     }
-    public static void saveSurveyData(String title, String author, String currentDate, String startDate, String endDate, ArrayList<Questions> questionArray){
+
+    public static int chooseSurveyFromData() {
+        Scanner sc = new Scanner(System.in);
+        int choose = -1;
+        try {
+            JSONParser parser = new JSONParser();
+            Object obj = parser.parse(new FileReader("data/survey.json"));
+            JSONArray jsonObject = (JSONArray) obj;
+            int surveyNumbers = jsonObject.size();
+            if (jsonObject.size() > 9)
+                surveyNumbers = 10;
+            for (int i = 0; i <= surveyNumbers - 1; i++) {
+                JSONObject survey = (JSONObject) jsonObject.get(i);
+                System.out.println(i + 1 + ") " + survey.get("title"));
+                System.out.format("\t \t (Avaible from " + survey.get("startDate") + " - " + survey.get("endDate")
+                        + " | by " + survey.get("username") + ")\n");
+            }
+            choose = sc.nextInt();
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return choose-1;
+    }
+
+    public static JSONObject getSurvey(int surveyNumber) {
+        JSONArray jsonObject = null;
         try {
             JSONParser parser = new JSONParser();
             Object obj;
             obj = parser.parse(new FileReader("data/survey.json"));
+            jsonObject = (JSONArray) obj; // read already existing data
+            System.out.println(jsonObject.get(surveyNumber));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return (JSONObject)jsonObject.get(surveyNumber);
+    }
+    
+    public static void saveSurveyData(String title, String author, String currentDate, String startDate, String endDate, ArrayList<Questions> questionArray, String dataType) {
+        try {
+            JSONParser parser = new JSONParser();
+            System.out.println("data/" + dataType);
+            Object obj = parser.parse(new FileReader("data/" + dataType));
             JSONArray jsonObject = (JSONArray) obj; // read already existing data
-            // insert new data
-            JSONObject surveyObject = new JSONObject();
+            //String, Object statt String, String, weil es bei questions ein Array befindet
+            Map<String, Object> surveyObject = new LinkedHashMap<String, Object>(); //Map, instead of JSONObject, so it will preserve order
             surveyObject.put("title", title);
             surveyObject.put("username", author);
             surveyObject.put("dateOfCreation", currentDate);
@@ -71,12 +111,15 @@ public class Data {
             JSONArray questions = new JSONArray();
             for (Questions q : questionArray) {
                 int x = 1;
-                JSONObject questionBlock = new JSONObject();
-                JSONObject answerBlock = new JSONObject();
+                Map<String, Object> questionBlock = new LinkedHashMap<String, Object>(); 
+                Map<String, Object> answerBlock = new LinkedHashMap<String, Object>(); 
                 questionBlock.put("title", q.questionTitle);
 
                 for (String answer : q.array) {
-                    answerBlock.put(x + "_answer", answer);
+                    if(dataType.equals("survey.json"))
+                        answerBlock.put(x + "_answer", answer);
+                    else
+                        answerBlock.put(x + "_answer", 0);
                     x++;
                 }
                 questionBlock.put("answers", answerBlock);
@@ -84,12 +127,62 @@ public class Data {
             }
             surveyObject.put("questions", questions);
             jsonObject.add(surveyObject);
-            try (FileWriter file = new FileWriter("data/survey.json")) {
+            try (FileWriter file = new FileWriter("data/" + dataType)) { //ABSPEICHERN IN JSON FILE "data/survey.json" oder "data/surveyStats.json"
                 file.write(jsonObject.toJSONString());
                 System.out.println("Data were successfully saved");
             } catch (IOException e) {
                 System.out.println("Error initializing stream  ");
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveUserData(UserRegistered user) {
+        try {
+            // read already existing data
+            JSONParser parser = new JSONParser();
+            Object obj = parser.parse(new FileReader("data/user.json"));
+            JSONArray jsonObject = (JSONArray) obj;
+            // insert new data
+            JSONObject object = new JSONObject();
+            object.put("username", user.getUsername());
+            object.put("password", user.getPassword());
+
+            // save data
+            jsonObject.add(object);
+            try (FileWriter file = new FileWriter("data/user.json")) {
+                file.write(jsonObject.toJSONString());
+                System.out.println("Data were successfully saved");
+            } catch (IOException e) {
+                System.out.println("Error initializing stream");
+            }
+        } catch (Exception e) {
+            // create new user.json? maybe???
+            e.printStackTrace();
+        }
+    }
+
+    public static void saveSurveyStats(int surveyNumber, ArrayList<Integer> newStats){
+        try {
+            JSONParser parser = new JSONParser();
+            Object obj = parser.parse(new FileReader("data/surveyStats.json"));
+            JSONArray jsonObject = (JSONArray) obj; 
+            JSONObject surveyStats = (JSONObject)jsonObject.get(surveyNumber);
+            JSONArray allQuestions = (JSONArray)surveyStats.get("questions");
+            for(int i = 0; i <= allQuestions.size()-1; i++){
+                JSONObject question = (JSONObject)allQuestions.get(i);
+                JSONObject answers = (JSONObject)question.get("answers");
+                int x = Integer.parseInt(answers.get(newStats.get(i) + "_answer").toString()) + 1;
+                answers.replace(newStats.get(i) + "_answer", x);
+            }
+            try (FileWriter file = new FileWriter("data/surveyStats.json")) { 
+            file.write(jsonObject.toJSONString());
+            System.out.println("Data were successfully saved");
+            } catch (IOException e) {
+                System.out.println("Error initializing stream  ");
+            }
+            //SAVE SURVEY STATS
         } catch (Exception e) {
             e.printStackTrace();
         }

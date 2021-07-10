@@ -18,7 +18,7 @@ public class UserFactory {
                 System.out.println(user[1]);
                 newUser.setUsername(user[0]);
                 newUser.setPassword(user[1]);
-                security.saveData(newUser);
+                Data.saveUserData(newUser);
                 return newUser;
             case 2:
                 GuestUser guestUser = new GuestUser();

@@ -1,6 +1,4 @@
 import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Scanner;
 import org.json.simple.*;
 import org.json.simple.parser.*;
@@ -107,35 +105,9 @@ public class SecurityService {
                     return true;
                 }
             }
-
         } catch (Exception e) {
             // TODO: handle exception
         }
         return false;
-    }
-
-    public void saveData(UserRegistered user) {
-        try {
-            // read already existing data
-            JSONParser parser = new JSONParser();
-            Object obj = parser.parse(new FileReader("data/user.json"));
-            JSONArray jsonObject = (JSONArray) obj;
-            // insert new data
-            JSONObject object = new JSONObject();
-            object.put("username", user.getUsername());
-            object.put("password", user.getPassword());
-            
-            // save data
-            jsonObject.add(object);
-            try (FileWriter file = new FileWriter("data/user.json")) {
-                file.write(jsonObject.toJSONString());
-                System.out.println("Data were successfully saved");
-            } catch (IOException e) {
-                System.out.println("Error initializing stream  ");
-            }
-        } catch (Exception e) {
-            // create new user.json? maybe???
-            e.printStackTrace();
-        }
     }
 }

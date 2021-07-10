@@ -17,13 +17,11 @@ public class App {
         int selection = sc.nextInt();
         switch (selection) {
             case 1:
-                System.out.println("LogIn");
                 currentUser = userfactory.getUser(0);
                 mainMenu();
                 break;
             case 2:
                 currentUser = userfactory.getUser(1);
-                System.out.println("lol");
                 mainMenu();
                 break;
             case 3:
@@ -55,7 +53,7 @@ public class App {
                 break;
             case 2:
                 Survey existingSurvey = new Survey();
-                existingSurvey.chooseSurvey();
+                existingSurvey.takeSurvey(Data.chooseSurveyFromData());
                 break;
             case 3:
                 System.out.print("Search... ");
@@ -63,6 +61,7 @@ public class App {
                 Data.searchSurvey(search);
                 break;
             case 4:
+                
                 break;
             case 5:
                 break;
@@ -80,7 +79,7 @@ public class App {
         switch (guestSelect) {
             case 1:
                 Survey existingSurvey = new Survey();
-                existingSurvey.chooseSurvey();
+                existingSurvey.takeSurvey(Data.chooseSurveyFromData());
                 break;
             case 2:
                 Scanner scanner = new Scanner(System.in);
