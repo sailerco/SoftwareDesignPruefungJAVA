@@ -9,6 +9,7 @@ public class UserFactory {
                     UserRegistered alreadyRegisteredUser = new UserRegistered();
                     alreadyRegisteredUser.setUsername(userdata[0]);
                     alreadyRegisteredUser.setPassword(userdata[1]);
+                    alreadyRegisteredUser.setUuid(Data.getUuid(userdata[0]));
                     return alreadyRegisteredUser;
                 }             
             case 1:
@@ -19,10 +20,12 @@ public class UserFactory {
                 newUser.setUsername(user[0]);
                 newUser.setPassword(user[1]);
                 Data.saveUserData(newUser);
+                Data.saveUserDataForStats(newUser);
                 return newUser;
             case 2:
                 GuestUser guestUser = new GuestUser();
-                guestUser.setUserID();
+                guestUser.randomUUID();
+                Data.saveUserDataForStats(guestUser);
                 return guestUser;
         }
         return null;

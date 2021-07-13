@@ -3,7 +3,6 @@ import java.util.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -57,7 +56,7 @@ public class Survey {
         while (question.addAnswers());
         questionArray.add(question);
         System.out.println(questionArray);
-        // Check if there are at least 5 Questions, and ask if we should add more
+        // TODO: Check if there are at least 5 Questions, and ask if we should add more
         if (this.numberOfQuestions < 2)
             return true;
         else {
@@ -69,17 +68,16 @@ public class Survey {
         Scanner sc = new Scanner(System.in);
         System.out.println("Do you want to add more " + type + "? Enter Y or N ");
         String yesOrNo = sc.nextLine();
-        if (yesOrNo.equalsIgnoreCase("N"))
+        if (yesOrNo.equalsIgnoreCase("N")){
             return false;
-        else
+        }else{
             return true;
+        }
     }
     
     public void finishSurvey() {
         printSurvey();
-        Data.saveSurveyData(this.title, this.author, this.currentDate, this.startDate, this.endDate, questionArray, "survey.json");
-
-        Data.saveSurveyData(this.title, this.author, this.currentDate, this.startDate, this.endDate, questionArray, "surveyStats.json");
+        Data.saveSurveyData(this.title, this.author, this.currentDate, this.startDate, this.endDate, questionArray);
     }
  
     public boolean validateDate(Date currentDate, String startDate, String endDate) {
@@ -119,8 +117,20 @@ public class Survey {
             }
         }
     }
-
-    public void takeSurvey(int surveyNumber){
+    
+    public void search(UUID id){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Search... ");
+        String search = scanner.nextLine();
+        int x = Data.searchSurvey(search);
+        System.out.println(x);
+        if(x > -1)
+            this.takeSurvey(x, id);
+        else if(x == -1) //search again
+            this.search(id);
+    }
+    
+    public void takeSurvey(int surveyNumber, UUID id){
         Scanner sc = new Scanner(System.in);
         JSONObject choosenSurvey = Data.getSurvey(surveyNumber);
         JSONArray allQuestions = (JSONArray)choosenSurvey.get("questions");
@@ -136,7 +146,10 @@ public class Survey {
             saveForStats.add(choose);
         }
         Data.saveSurveyStats(surveyNumber, saveForStats);
+        Data.saveUserStats(surveyNumber, id);
+        sc.close();
     }
+    
     public void setTitle(String title) {
         this.title = title;
     }

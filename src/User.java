@@ -1,6 +1,11 @@
+import java.util.UUID;
+
 public interface User {
-    public int userID = 0;
+    public UUID uuid = null;
 
     public void showStats(int _userID);
 
+    public UUID getUuid();
+
+    public void setUuid(UUID id);
 }

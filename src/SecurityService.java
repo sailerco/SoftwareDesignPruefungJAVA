@@ -6,12 +6,9 @@ import org.json.simple.parser.*;
 public class SecurityService {
     // create an object of SecurityService
     private static SecurityService instance = new SecurityService();
-
     // make the constructor private so that this class cannot be
     // instantiated
-    private SecurityService() {
-    }
-
+    private SecurityService() {}
     // Get the only object available
     public static SecurityService getInstance() {
         return instance;

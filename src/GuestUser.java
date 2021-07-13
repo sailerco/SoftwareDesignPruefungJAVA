@@ -1,9 +1,22 @@
+import java.util.UUID;
+
 public class GuestUser implements User{
-    public int userID;
+    public UUID uuid = UUID.randomUUID();
 
     public void showStats(int _userID){};
 
-    public void setUserID(){
-        this.userID = 1;
+    public void showStats(){
+        System.out.println(this.getUuid());
+        Data.showUserStats(this.getUuid());
+    }
+    
+    public UUID getUuid(){
+        return this.uuid;
+    }
+    public void setUuid(UUID id){
+        this.uuid = UUID.randomUUID();
+    }
+    public void randomUUID(){
+        this.uuid = UUID.randomUUID();
     }
 }

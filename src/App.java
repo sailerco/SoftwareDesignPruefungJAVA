@@ -42,55 +42,65 @@ public class App {
         System.out.println("1) Create Survey");
         System.out.println("2) Choose Survey");
         System.out.println("3) Search Survey");
-        System.out.println("4) Show my Surveys");
+        System.out.println("4) Show my Surveys and their Stats");
         System.out.println("5) Show Stats");
         select = sc.nextInt();
+        
         switch (select) {
             case 1:
                 Survey survey = new Survey();
                 survey.author = registeredUser.getUsername();
                 survey.createSurvey();
+                mainMenu();
                 break;
             case 2:
                 Survey existingSurvey = new Survey();
-                existingSurvey.takeSurvey(Data.chooseSurveyFromData());
+                existingSurvey.takeSurvey(Data.chooseSurveyFromData(registeredUser.getUuid()), registeredUser.getUuid());
+                mainMenu();
                 break;
             case 3:
-                System.out.print("Search... ");
-                String search = sc.nextLine();
-                Data.searchSurvey(search);
+                Survey searchSurvey = new Survey();
+                searchSurvey.search(registeredUser.getUuid());
+                mainMenu();
                 break;
             case 4:
-                
+                registeredUser.seeSurveyStats();
+                mainMenu();
                 break;
             case 5:
+                registeredUser.showStats();
                 break;
         }
     }
 
     public static void guestMenu() {
+        GuestUser guestUser = (GuestUser) currentUser;
         Scanner sc = new Scanner(System.in);
         System.out.println("Mainmenu"); // FÜR GÄSTE
         System.out.println("Type any number between 1 and 3");
         System.out.println("1) Choose Survey");
         System.out.println("2) Search Survey");
         System.out.println("3) Show Stats");
+        System.out.println("4) Create an Account");
         int guestSelect = sc.nextInt();
         switch (guestSelect) {
             case 1:
                 Survey existingSurvey = new Survey();
-                existingSurvey.takeSurvey(Data.chooseSurveyFromData());
+                existingSurvey.takeSurvey(Data.chooseSurveyFromData(guestUser.getUuid()), guestUser.getUuid());
+                guestMenu();
                 break;
             case 2:
-                Scanner scanner = new Scanner(System.in);
-                System.out.print("search: ");
-                String search = scanner.nextLine();
-                String s = Data.searchSurvey(search);
-                if (s == null) {
-                    guestMenu();
-                }
+                Survey searchSurvey = new Survey();
+                searchSurvey.search(guestUser.getUuid());
+                guestMenu();
                 break;
             case 3:
+                guestUser.showStats();
+                break;
+            case 4:
+                UserFactory userfactory = new UserFactory();
+                currentUser = userfactory.getUser(1);
+                mainMenu();
                 break;
         }
     }
