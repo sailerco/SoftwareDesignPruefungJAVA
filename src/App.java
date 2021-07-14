@@ -51,26 +51,23 @@ public class App {
                 Survey survey = new Survey();
                 survey.author = registeredUser.getUsername();
                 survey.createSurvey();
-                mainMenu();
                 break;
             case 2:
                 Survey existingSurvey = new Survey();
                 existingSurvey.takeSurvey(Data.chooseSurveyFromData(registeredUser.getUuid()), registeredUser.getUuid());
-                mainMenu();
                 break;
             case 3:
                 Survey searchSurvey = new Survey();
                 searchSurvey.search(registeredUser.getUuid());
-                mainMenu();
                 break;
             case 4:
                 registeredUser.seeSurveyStats();
-                mainMenu();
                 break;
             case 5:
                 registeredUser.showStats();
                 break;
         }
+        mainMenu();
     }
 
     public static void guestMenu() {
@@ -96,6 +93,7 @@ public class App {
                 break;
             case 3:
                 guestUser.showStats();
+                guestMenu();
                 break;
             case 4:
                 UserFactory userfactory = new UserFactory();

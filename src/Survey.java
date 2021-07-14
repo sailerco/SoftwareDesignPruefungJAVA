@@ -57,7 +57,7 @@ public class Survey {
         questionArray.add(question);
         System.out.println(questionArray);
         // TODO: Check if there are at least 5 Questions, and ask if we should add more
-        if (this.numberOfQuestions < 2)
+        if (this.numberOfQuestions < 5)
             return true;
         else {
             return addMore("Questions");
@@ -122,7 +122,7 @@ public class Survey {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Search... ");
         String search = scanner.nextLine();
-        int x = Data.searchSurvey(search);
+        int x = Data.searchSurvey(search, id);
         System.out.println(x);
         if(x > -1)
             this.takeSurvey(x, id);
@@ -146,8 +146,7 @@ public class Survey {
             saveForStats.add(choose);
         }
         Data.saveSurveyStats(surveyNumber, saveForStats);
-        Data.saveUserStats(surveyNumber, id);
-        sc.close();
+        Data.saveUserStats(surveyNumber, id);    
     }
     
     public void setTitle(String title) {

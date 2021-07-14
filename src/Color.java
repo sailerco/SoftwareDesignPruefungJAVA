@@ -1,5 +1,6 @@
 enum Color {
     //Color end string, color reset
+    // https://stackoverflow.com/a/45444716/16284111
     RESET("\033[0m"),
 
     // Regular Colors. Normal color, no bold, background color etc.

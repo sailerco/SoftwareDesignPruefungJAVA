@@ -3,26 +3,32 @@
         "takenSurveys": {
             "3_title": "yoyoyo",
             "2_title": "what",
+            "5_title": "Katze",
+            "4_title": "When",
             "1_title": "yoo"
         },
         "id": "ed23f960-c1bb-45c2-81db-cf4120955335",
-        "numberOfTakenSurvey": 3
+        "numberOfTakenSurvey": 7
     },
     {
         "takenSurveys": {
+            "3_title": "When",
             "2_title": "what",
+            "5_title": "yoyoyo",
+            "4_title": "Katze",
             "1_title": "yoo"
         },
         "id": "0fe8f745-e400-4a82-b564-a06fd20f7dfb",
-        "numberOfTakenSurvey": 2
+        "numberOfTakenSurvey": 5
     },
     {
         "takenSurveys": {
+            "3_title": "yoyoyo",
             "2_title": "what",
             "1_title": "yoo"
         },
         "id": "a30802e8-4b9a-4bdc-b49f-987bdc60f207",
-        "numberOfTakenSurvey": 2
+        "numberOfTakenSurvey": 3
     },
     {
         "takenSurveys": {
@@ -41,9 +47,13 @@
         "numberOfTakenSurvey": 2
     },
     {
-        "takenSurveys": {},
+        "takenSurveys": {
+            "3_title": "yoyoyo",
+            "2_title": "Katze",
+            "1_title": "When"
+        },
         "id": "79e2e01d-6068-4af1-b6b4-83ea0456be1f",
-        "numberOfTakenSurvey": 2
+        "numberOfTakenSurvey": 5
     },
     {
         "takenSurveys": {
@@ -129,6 +139,64 @@
             "1_title": "Katze"
         },
         "id": "d307c8c4-1da7-47ad-969a-b7a15b1948fa",
+        "numberOfTakenSurvey": 1
+    },
+    {
+        "takenSurveys": {},
+        "id": "b0c6e71c-d51a-441a-9649-eff9103e921a",
+        "numberOfTakenSurvey": 0
+    },
+    {
+        "takenSurveys": {},
+        "id": "a27c385c-c617-48c9-b598-8566951cc9b8",
+        "numberOfTakenSurvey": 0
+    },
+    {
+        "takenSurveys": {
+            "1_title": "yoyoyo"
+        },
+        "id": "a47bdae6-50c5-4e01-b7a4-3e7686cec170",
+        "numberOfTakenSurvey": 1
+    },
+    {
+        "takenSurveys": {
+            "1_title": "When"
+        },
+        "id": "eeca733c-e192-4626-b521-d07824747c23",
+        "numberOfTakenSurvey": 1
+    },
+    {
+        "takenSurveys": {
+            "1_title": "When"
+        },
+        "id": "5236f734-f2ed-45ab-9239-80c3b3a87196",
+        "numberOfTakenSurvey": 1
+    },
+    {
+        "takenSurveys": {
+            "1_title": "Wie alt sind Sie?"
+        },
+        "id": "e7e50dbd-e21c-437e-9486-7836c697c25d",
+        "numberOfTakenSurvey": 1
+    },
+    {
+        "takenSurveys": {},
+        "id": "12451f2e-ef73-40c4-97bc-b26c6a9fec8d",
+        "numberOfTakenSurvey": 0
+    },
+    {
+        "takenSurveys": {
+            "2_title": "Katze",
+            "1_title": "When"
+        },
+        "id": "99b5a4ba-3f9e-418f-a76f-4c183b2f2c91",
+        "numberOfTakenSurvey": 2
+    },
+    {
+        "takenSurveys": {
+            "1_title": "yoyoyo"
+        },
+        "id": "dabb4adf-3a74-4440-a249-d2582b99491f",
         "numberOfTakenSurvey": 1
     }
 ]

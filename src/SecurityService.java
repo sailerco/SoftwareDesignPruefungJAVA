@@ -68,6 +68,8 @@ public class SecurityService {
                 return false;
             }
         }
+        if(username.equals(""))
+            return false;
         return true;
     }
 
