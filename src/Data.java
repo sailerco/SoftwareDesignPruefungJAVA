@@ -41,35 +41,10 @@ public class Data {
                     System.out.println(numberOfMatch + ") " + survey.get("title"));
                     titleThatMatched.add(i);
                     //TODO: Aulagern
-                    if(Data.isInaccesible(userID, survey)){
+                    if(Data.isInaccesible(userID, survey))
                         inaccesible.add(numberOfMatch);
-                        continue;
-                    }
-                    /* if(Data.ownSurvey(userID, survey.get("username").toString())){
-                        inaccesible.add(numberOfMatch);
-                        System.out.format("\t \t ("+ Color.RED +"Inaccessible."+ Color.RESET +" You created this survey "
-                                + survey.get("username") + ")\n");
-                        continue;
-                    }
-                    if(Data.takenAlready(userID, survey.get("title").toString())){
-                        inaccesible.add(numberOfMatch);
-                        System.out.format("\t \t ("+ Color.RED + "Inaccessible. "+ Color.RESET +"You took it already | by "
-                                + survey.get("username") + ")\n");
-                        continue;
-                    }
-                    if (Data.checkDate(survey.get("startDate"), true)) {
-                        System.out.format("\t \t ("+ Color.RED + "Inaccessible,"+ Color.RESET +" start date: " + survey.get("startDate") + " | by "
-                                + survey.get("username") + ")\n");
-                        inaccesible.add(numberOfMatch);
-                        continue;
-                    }
-                    if (Data.checkDate(survey.get("endDate"), false)) {
-                        System.out.format("\t \t ("+ Color.RED + "Inaccessible, "+ Color.RESET +"end date: " + survey.get("endDate") + " | by "
-                                + survey.get("username") + " | " + survey.get("timesTaken") + "x taken)\n");
-                        inaccesible.add(numberOfMatch);
-                        continue;
-                    } */
-                    System.out.format("\t \t ("+ Color.GREEN +"Avaible "+ Color.RESET + " from " + survey.get("startDate") + " - " + survey.get("endDate")
+                    else
+                        System.out.format("\t \t ("+ Color.GREEN +"Avaible "+ Color.RESET + " from " + survey.get("startDate") + " - " + survey.get("endDate")
                             + " | by " + survey.get("username") + " | " + survey.get("timesTaken") + "x taken)\n");
                     
                 }
@@ -122,36 +97,11 @@ public class Data {
                 JSONObject survey = (JSONObject) jsonObject.get(jsonObject.size() - 1 - i);
                 System.out.println(i + 1 + ") " + survey.get("title"));
                 //Check if it is accessible
-                if(Data.isInaccesible(userID, survey)){
+                if(Data.isInaccesible(userID, survey))
                     inaccesible.add(i+1);
-                    continue;
-                }
-                /* if(Data.ownSurvey(userID, survey.get("username").toString())){
-                    inaccesible.add(i + 1);
-                    System.out.format("\t \t ("+ Color.RED +"Inaccessible."+ Color.RESET +" You created this survey"
-                            + survey.get("username") + ")\n");
-                    continue;
-                }
-                if(Data.takenAlready(userID, survey.get("title").toString())){
-                    inaccesible.add(i + 1);
-                    System.out.format("\t \t ("+ Color.RED + "Inaccessible,"+ Color.RESET +" You took it already | by "
-                            + survey.get("username") + ")\n");
-                    continue;
-                }
-                if (Data.checkDate(survey.get("startDate"), true)) {
-                    System.out.format("\t \t ("+ Color.RED +"Inaccessible,"+ Color.RESET +" start date: " + survey.get("startDate") + " | by "
-                            + survey.get("username") + ")\n");
-                    inaccesible.add(i + 1);
-                    continue;
-                }
-                if (Data.checkDate(survey.get("endDate"), false)) {
-                    System.out.format("\t \t ("+ Color.RED +"Inaccessible,"+ Color.RESET +" end date: " + survey.get("endDate") + " | by "
-                            + survey.get("username") + " | " + survey.get("timesTaken") + "x taken)\n");
-                    inaccesible.add(i + 1);
-                    continue;
-                } */
-                System.out.format("\t \t ("+ Color.GREEN +"Avaible "+ Color.RESET + "from "  + survey.get("startDate") + " - " + survey.get("endDate")
-                        + " | by " + survey.get("username") + " | " + survey.get("timesTaken") + "x taken)\n");
+                else
+                    System.out.format("\t \t ("+ Color.GREEN +"Avaible "+ Color.RESET + "from "  + survey.get("startDate") + " - " + survey.get("endDate")
+                            + " | by " + survey.get("username") + " | " + survey.get("timesTaken") + "x taken)\n");
             }
             choose = sc.nextInt();
             while (inaccesible.contains(choose)) {
@@ -164,10 +114,10 @@ public class Data {
         }
         return choose;
     }
+    
     public static boolean isInaccesible(UUID userID, JSONObject survey){
         if(Data.ownSurvey(userID, survey.get("username").toString())){
-            System.out.format("\t \t ("+ Color.RED +"Inaccessible."+ Color.RESET +" You created this survey"
-                    + survey.get("username") + ")\n");
+            System.out.format("\t \t ("+ Color.RED +"Inaccessible."+ Color.RESET +" You created this survey)\n");
             return true;
         }
         if(Data.takenAlready(userID, survey.get("title").toString())){
@@ -187,6 +137,7 @@ public class Data {
         }
         return false;
     }
+    
     public static boolean takenAlready(UUID userID, String title){
         try {
             String id = userID.toString();
@@ -204,6 +155,7 @@ public class Data {
         }
         return false;
     }
+    
     public static boolean ownSurvey(UUID userID, String nameToCheck){
         try {
             String id = userID.toString();
@@ -221,6 +173,7 @@ public class Data {
         }
         return false;
     }
+    
     public static JSONObject getSurvey(int surveyNumber) {
         JSONArray jsonObject = null;
         try {

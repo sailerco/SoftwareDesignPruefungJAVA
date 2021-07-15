@@ -37,6 +37,7 @@ public class App {
         Scanner sc = new Scanner(System.in);
         int select = 0;
         UserRegistered registeredUser = (UserRegistered) currentUser;
+        System.out.println("__________________________________\n");
         System.out.println("Mainmenu");
         System.out.println("Type any number between 1 and 5");
         System.out.println("1) Create Survey");
@@ -73,6 +74,7 @@ public class App {
     public static void guestMenu() {
         GuestUser guestUser = (GuestUser) currentUser;
         Scanner sc = new Scanner(System.in);
+        System.out.println("__________________________________\n");
         System.out.println("Mainmenu"); // FÜR GÄSTE
         System.out.println("Type any number between 1 and 3");
         System.out.println("1) Choose Survey");
