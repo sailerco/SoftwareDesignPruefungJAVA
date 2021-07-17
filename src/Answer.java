@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Answer {
-    public String answer;
+    private String answer;
     public String createAnswer(){
         Scanner sc = new Scanner(System.in);
         System.out.print("Answer: ");

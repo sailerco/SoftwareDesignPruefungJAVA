@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.UUID;
 
 public class App {
     private static User currentUser;
@@ -37,6 +38,7 @@ public class App {
         Scanner sc = new Scanner(System.in);
         int select = 0;
         UserRegistered registeredUser = (UserRegistered) currentUser;
+        UUID id = registeredUser.getUuid();
         System.out.println("__________________________________\n");
         System.out.println("Mainmenu");
         System.out.println("Type any number between 1 and 5");
@@ -55,11 +57,11 @@ public class App {
                 break;
             case 2:
                 Survey existingSurvey = new Survey();
-                existingSurvey.takeSurvey(Data.chooseSurveyFromData(registeredUser.getUuid()), registeredUser.getUuid());
+                existingSurvey.takeSurvey(Data.chooseSurveyFromData(id), id);
                 break;
             case 3:
                 Survey searchSurvey = new Survey();
-                searchSurvey.search(registeredUser.getUuid());
+                searchSurvey.search(id);
                 break;
             case 4:
                 registeredUser.seeSurveyStats();
@@ -73,6 +75,7 @@ public class App {
 
     public static void guestMenu() {
         GuestUser guestUser = (GuestUser) currentUser;
+        UUID id = guestUser.getUuid();
         Scanner sc = new Scanner(System.in);
         System.out.println("__________________________________\n");
         System.out.println("Mainmenu"); // FÜR GÄSTE
@@ -85,12 +88,13 @@ public class App {
         switch (guestSelect) {
             case 1:
                 Survey existingSurvey = new Survey();
-                existingSurvey.takeSurvey(Data.chooseSurveyFromData(guestUser.getUuid()), guestUser.getUuid());
+                
+                existingSurvey.takeSurvey(Data.chooseSurveyFromData(id), id);
                 guestMenu();
                 break;
             case 2:
                 Survey searchSurvey = new Survey();
-                searchSurvey.search(guestUser.getUuid());
+                searchSurvey.search(id);
                 guestMenu();
                 break;
             case 3:

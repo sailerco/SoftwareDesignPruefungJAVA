@@ -40,7 +40,6 @@ public class Data {
                     numberOfMatch++;
                     System.out.println(numberOfMatch + ") " + survey.get("title"));
                     titleThatMatched.add(i);
-                    //TODO: Aulagern
                     if(Data.isInaccesible(userID, survey))
                         inaccesible.add(numberOfMatch);
                     else
@@ -115,12 +114,12 @@ public class Data {
         return choose;
     }
     
-    public static boolean isInaccesible(UUID userID, JSONObject survey){
-        if(Data.ownSurvey(userID, survey.get("username").toString())){
+    private static boolean isInaccesible(UUID userID, JSONObject survey){
+        if(Data.isOwnSurvey(userID, survey.get("username").toString())){
             System.out.format("\t \t ("+ Color.RED +"Inaccessible."+ Color.RESET +" You created this survey)\n");
             return true;
         }
-        if(Data.takenAlready(userID, survey.get("title").toString())){
+        if(Data.isSurveyAlreadyTaken(userID, survey.get("title").toString())){
             System.out.format("\t \t ("+ Color.RED + "Inaccessible,"+ Color.RESET +" You took it already | by "
                     + survey.get("username") + ")\n");
             return true;
@@ -138,7 +137,7 @@ public class Data {
         return false;
     }
     
-    public static boolean takenAlready(UUID userID, String title){
+    private static boolean isSurveyAlreadyTaken(UUID userID, String title){
         try {
             String id = userID.toString();
             JSONArray jsonObject = load("data/userStats.json");
@@ -156,7 +155,7 @@ public class Data {
         return false;
     }
     
-    public static boolean ownSurvey(UUID userID, String nameToCheck){
+    public static boolean isOwnSurvey(UUID userID, String nameToCheck){
         try {
             String id = userID.toString();
             JSONArray jsonObject = load("data/user.json");
@@ -193,31 +192,30 @@ public class Data {
         }
     }
    
-    public static void saveSurveyData(String title, String author, String currentDate, String startDate, String endDate,
-            ArrayList<Questions> questionArray) {
+    public static void saveSurveyData(Survey survey, ArrayList<Question> questionArray) {
         try {
             JSONArray jsonObject = load("data/survey.json"); // read already existing data
             // String, Object statt String, String, weil es bei questions ein Array befindet
             Map<String, Object> surveyObject = new LinkedHashMap<String, Object>(); // Map, instead of JSONObject, so it
                                                                                     // will preserve order
-            surveyObject.put("title", title);
-            surveyObject.put("username", author);
-            surveyObject.put("dateOfCreation", currentDate);
-            surveyObject.put("startDate", startDate);
-            surveyObject.put("endDate", endDate);
+            surveyObject.put("title", survey.title);
+            surveyObject.put("username", survey.author);
+            surveyObject.put("dateOfCreation", survey.currentDate.toString());
+            surveyObject.put("startDate", survey.startDate);
+            surveyObject.put("endDate", survey.endDate);
             surveyObject.put("timesTaken", 0);
             JSONArray questions = new JSONArray();
-            for (Questions q : questionArray) {
-                int x = 1;
+            for (Question q : questionArray) {
+                int counter = 1;
                 Map<String, Object> questionBlock = new LinkedHashMap<String, Object>();
                 Map<String, String> answerBlock = new LinkedHashMap<String, String>();
                 Map<String, Integer> statsBlock = new LinkedHashMap<String, Integer>();
                 questionBlock.put("title", q.questionTitle);
 
                 for (String answer : q.array) {
-                    answerBlock.put(x + "_answer", answer);
-                    statsBlock.put(x + "_answer", 0);
-                    x++;
+                    answerBlock.put(counter + "_answer", answer);
+                    statsBlock.put(counter + "_answer", 0);
+                    counter++;
                 }
 
                 questionBlock.put("answers", answerBlock);
@@ -298,23 +296,23 @@ public class Data {
         }
     }
 
-    public static ArrayList<Integer> showOwnSurveys(String username) {
+    public static ArrayList<Integer> getAndShowOwnSurveys(String username) {
         ArrayList<Integer> mySurveys = new ArrayList<Integer>();
         try {
             System.out.println("Your Surveys:");
             JSONArray jsonObject = load("data/surveyStats.json");
             int surveyNumbers = jsonObject.size();
 
-            int x = 0;
+            int numberOfmatches = 0;
             for (int i = 0; i <= surveyNumbers - 1; i++) {
                 JSONObject survey = (JSONObject) jsonObject.get(i);
                 if (survey.get("username").toString().equals(username) && Integer.parseInt(survey.get("timesTaken").toString()) != 0) {
-                    x++;
-                    System.out.println(x + ") " + survey.get("title"));
+                    numberOfmatches++;
+                    System.out.println(numberOfmatches + ") " + survey.get("title"));
                     mySurveys.add(i);
                 }
             }
-            if (x == 0)
+            if (numberOfmatches == 0)
                 System.out.println("You don't have any Surveys yet or they weren't taken yet");
         } catch (Exception e) {
             // TODO: handle exception

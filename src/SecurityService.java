@@ -7,9 +7,8 @@ public class SecurityService {
     // create an object of SecurityService
     private static SecurityService instance = new SecurityService();
     // make the constructor private so that this class cannot be
-    // instantiated
     private SecurityService() {}
-    // Get the only object available
+
     public static SecurityService getInstance() {
         return instance;
     }
@@ -20,7 +19,7 @@ public class SecurityService {
         String username = sc.nextLine();
         boolean isValid = checkAlphaNumeric(username);
         boolean usernameNotAnDuplicate = checkSignUpData(username);
-        if (isValid == false || usernameNotAnDuplicate == false) {
+        if (!isValid || !usernameNotAnDuplicate) {
             System.out.println(Color.RED);
             if (!isValid)
                 System.out.println("The username must be alphanumeric. No Special Characters");
@@ -31,8 +30,12 @@ public class SecurityService {
         } else {
             System.out.print("Password: ");
             String password = sc.nextLine();
-            String[] s = { username, password };
-            return s;
+            while(password.equals("")){
+                System.out.print("Password shouldn't be nothing, enter a new one: ");
+                password = sc.nextLine();
+            }
+            String[] userdata = { username, password };
+            return userdata;
         }
     }
 
@@ -64,7 +67,7 @@ public class SecurityService {
     public boolean checkAlphaNumeric(String username) {
         for (int i = 0; i <= username.length() - 1; i++) {
             String character = String.valueOf(username.charAt(i));
-            if (character.matches("\\W")) {
+            if (!character.matches("[a-zA-Z1-9]+")) {
                 return false;
             }
         }
@@ -91,7 +94,7 @@ public class SecurityService {
         return true;
     }
 
-    public boolean checkLogInData(String username, String password) {
+    private boolean checkLogInData(String username, String password) {
         try {
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(new FileReader("data/user.json"));

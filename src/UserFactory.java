@@ -1,24 +1,19 @@
 public class UserFactory {
-    public User getUser(int _userType){                
+    public User getUser(int userType){                
         SecurityService security = SecurityService.getInstance();
-        switch(_userType){
+        switch(userType){
             case 0:
                 System.out.println("Log In");
                 String[] userdata = security.logIn();
                 if(userdata != null){
-                    UserRegistered alreadyRegisteredUser = new UserRegistered();
-                    alreadyRegisteredUser.setUsername(userdata[0]);
-                    alreadyRegisteredUser.setPassword(userdata[1]);
+                    UserRegistered alreadyRegisteredUser = new UserRegistered(userdata[0], userdata[1]);
                     alreadyRegisteredUser.setUuid(Data.getUuid(userdata[0]));
                     return alreadyRegisteredUser;
                 }             
             case 1:
                 System.out.println("Type in a new username and an alphanumeric password");
-                UserRegistered newUser = new UserRegistered();
                 String[] user = security.signUp();
-                System.out.println(user[1]);
-                newUser.setUsername(user[0]);
-                newUser.setPassword(user[1]);
+                UserRegistered newUser = new UserRegistered(user[0], user[1]);
                 Data.saveUserData(newUser);
                 Data.saveUserDataForStats(newUser);
                 return newUser;

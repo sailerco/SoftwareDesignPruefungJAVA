@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class Questions {
+public class Question{
     private int numberOfAnswers = 0;
     public String questionTitle;
     public ArrayList<String> array = new ArrayList<String>();

@@ -7,57 +7,53 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class Survey {
+    //TODO: private?
     public String title;
     public String author;
     public String currentDate;
     public String startDate;
     public String endDate;
-    public int numberOfQuestions = 0;
-    public ArrayList<Questions> questionArray = new ArrayList<Questions>();
+    private int numberOfQuestions = 0;
+    public ArrayList<Question> questionArray = new ArrayList<Question>();
 
+    public Survey(){
+        this.setDate();
+    }
+    
     public void createSurvey() {
         // TITEL
         Scanner sc = new Scanner(System.in);
         System.out.print("title: ");
         String title = sc.nextLine();
         setTitle(title);
-
-        // DATE
-        // get current Date without Time, SRC:
-        // https://stackoverflow.com/questions/9629636/get-todays-date-in-java-at-midnight-time
-        Calendar calendar = new GregorianCalendar();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        Date currentDate = calendar.getTime();
-        this.currentDate = currentDate.toString();
+        
         String startDate, endDate;
         do {
             System.out.print("Enter Start Date (dd.MM.yyyy): ");
             startDate = sc.nextLine();
-        } while (!validateDate(currentDate, startDate, null));
+        } while (!validateDate(startDate, null));
         this.startDate = startDate;
         do {
             System.out.print("Enter End Date (dd.MM.yyyy): ");
             endDate = sc.nextLine();
-        } while (!validateDate(currentDate, startDate, endDate));
+            
+        } while (!validateDate(startDate, endDate));
         this.endDate = endDate;
         // ADD QUESTIONS
         while (addQuestions());
         finishSurvey();
     }
-
+    //TODO: private?
     public boolean addQuestions() {
         // add question
         this.numberOfQuestions++;
         System.out.println(this.numberOfQuestions);
-        Questions question = new Questions();
+        Question question = new Question();
         question.createQuestions();
         while (question.addAnswers());
         questionArray.add(question);
         System.out.println(questionArray);
-        // TODO: Check if there are at least 5 Questions, and ask if we should add more
-        if (this.numberOfQuestions < 5)
+        if (this.numberOfQuestions < 5) //At least 5 questions
             return true;
         else {
             return addMore("Questions");
@@ -77,18 +73,23 @@ public class Survey {
     
     public void finishSurvey() {
         printSurvey();
-        Data.saveSurveyData(this.title, this.author, this.currentDate, this.startDate, this.endDate, questionArray);
+        Data.saveSurveyData(this, questionArray);
     }
- 
-    public boolean validateDate(Date currentDate, String startDate, String endDate) {
+    //#region date
+    private boolean validateDate(String startDate, String endDate) {
         try {
+            if(!this.dateExists(startDate))
+                return false;
             SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
             Date inputStartDate = formatter.parse(startDate);
+            Date currentDate = formatter.parse(this.currentDate);
             if (endDate == null) {
                 if (compareDate(currentDate, inputStartDate))
                     return true;
             } else {
                 Date inputEndDate = formatter.parse(endDate);
+                if(!this.dateExists(startDate))
+                    return false;
                 if (compareDate(inputStartDate, inputEndDate))
                     return true;
             }
@@ -97,8 +98,8 @@ public class Survey {
         }
         return false;
     }
-
-    public boolean compareDate(Date start, Date end) {
+    
+    private boolean compareDate(Date start, Date end) {
         if (start.equals(end) || start.before(end))
             return true;
         else {
@@ -106,27 +107,51 @@ public class Survey {
             return false;
         }
     }
-
-    public void printSurvey() {
-        for (Questions q : questionArray) {
-            System.out.println(q.questionTitle + " answers: ");
-            int x = 1;
-            for (String answer : q.array) {
-                System.out.println(x + ".)" + answer);
-                x++;
+    
+    private boolean dateExists(String date){
+        int daysOfMonth[]={31,28,31,30,31,30,31,31,30,31,30,31};
+        int day = Integer.parseInt(date.substring(0, 2));
+        int month = Integer.parseInt(date.substring(3, 5));
+        if(month > 0 && month <= 12){
+            if(day > 0 && day <= daysOfMonth[month-1]){
+                return true;
             }
         }
+        System.out.println("Date doesn't exist");
+        return false;
     }
+    
+    private void setDate(){
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat simpleformat = new SimpleDateFormat("dd.MM.yyyy");
+        String formattedDate = simpleformat.format(cal.getTime());
+        this.currentDate = formattedDate;
+    }
+    //#endregion
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    
+    public void printSurvey() {
+        for (Question q : questionArray) {
+            System.out.println(q.questionTitle + " answers: ");
+            int surveyCounter = 1;
+            for (String answer : q.array) {
+                System.out.println(surveyCounter + ".)" + answer);
+                surveyCounter++;
+            }
+        }
+    } 
     
     public void search(UUID id){
         Scanner scanner = new Scanner(System.in);
         System.out.print("Search... ");
         String search = scanner.nextLine();
-        int x = Data.searchSurvey(search, id);
-        System.out.println(x);
-        if(x > -1)
-            this.takeSurvey(x, id);
-        else if(x == -1) //search again
+        int surveyNumber = Data.searchSurvey(search, id);
+        System.out.println(surveyNumber);
+        if(surveyNumber > -1)
+            this.takeSurvey(surveyNumber, id);
+        else if(surveyNumber == -1) //search again
             this.search(id);
     }
     
@@ -147,9 +172,5 @@ public class Survey {
         }
         Data.saveSurveyStats(surveyNumber, saveForStats);
         Data.saveUserStats(surveyNumber, id);    
-    }
-    
-    public void setTitle(String title) {
-        this.title = title;
     }
 }
