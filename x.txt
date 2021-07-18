@@ -1,4 +1,0 @@
-FORMAT DATE
-System.out.println(currentDate + " " + inputStartDate);
-System.out.println(formatter.format(currentDate) + " " +
-formatter.format(inputStartDate));

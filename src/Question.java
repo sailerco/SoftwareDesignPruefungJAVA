@@ -1,13 +1,13 @@
 import java.util.*;
 
-public class Question{
+public class Question {
     private int numberOfAnswers = 0;
     public String questionTitle;
     public ArrayList<String> array = new ArrayList<String>();
 
     public void createQuestions() {
         Scanner sc = new Scanner(System.in);
-        System.out.print("Question Titel: ");
+        System.out.print("Title: ");
         String title = sc.nextLine();
         this.questionTitle = title;
     }

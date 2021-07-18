@@ -1,54 +1,34 @@
-## Getting Started
+## Questionary
+Wilkommen zu meine Questionary App.
+https://github.com/sailerco/SoftwareDesignPruefungJAVA
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Die Anwendung funktioniert durch User Eingabe (Zahlen oder Strings), deswegen ist es optimal, den Forderungen des Programms zu folgen.
 
-## Folder Structure
+## Libaries
+Ich habe folgende Libarys extern geholt: Junit, Json-Simple
+## JDK
+Ich habe für den Code JDK 11 benutzt.
 
-The workspace contains two folders by default, where:
+## JAR und Abspielen
+Bitte melden Sie sich wenn es nicht abspielbar sein solle.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+Ich empfehle einfach in Ihrer Entwicklungsumgebung das Programm zu testen. Hier können Sie auch den Unit Test testen.
+- Questionary.java = Main
+- UnitTest.java = Unit Test
 
-## Dependency Management
+Um die JAR in CMD auszuführen muss einfach solch ein Pfad angegeben werden
+S:\SoftwareDesignPruefungJAVA>java -jar SoftwareDesignPruefungJAVA.jar
+(natürlich den Pfad für den Ordner anpassen.)
+(vielleich muss eine Entwicklungsumgebung gesetzt werden)
 
-The `JAVA DEPENDENCIES` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-pack/blob/master/release-notes/v0.9.0.md#work-with-jar-files-directly).
+Ich habe in VSC gecoded und das JAVA Extension Pack benötigt.
+## Userdata
+Ein paar Userdaten zum ausprobieren. Die Passwörter sind gehasht, also kann man sie nicht aus der JSON auslesen
+Coco : 1234
+Jonas : 12345
+Mitch : abc
+xTobix123 : 187abc
+Gekko1 : 12345#
 
-<!-- ## Regex
-Ich wollte in meinem Regex auch äöüß erlauben jedoch hat meine Entwikclungumgebung äöü direkt nicht wahrgenommen.  -->
-JSON-Simple
-wird in falscher reihenfolge gespeicher:
-{
-        "endDate": "30.06.2021",
-        "questions": [
-            {
-                "answers": {
-                    "3_answer": "divers",
-                    "2_answer": "female",
-                    "4_answer": "don't wanna say",
-                    "1_answer": "male"
-                },
-                "title": "What's your gender?"
-            },
-            {
-                "answers": {
-                    "3_answer": "35-50",
-                    "2_answer": "18 - 35",
-                    "4_answer": ">50",
-                    "1_answer": "<18"
-                },
-                "title": "Age?"
-            },
-            {
-                "answers": {
-                    "3_answer": "5",
-                    "2_answer": "idk",
-                    "1_answer": "42"
-                },
-                "title": "What's idk?"
-            }
-        ],
-        "title": "survey",
-        "startDate": "28.06.2021",
-        "username": "username",
-        "dateOfCreation": "27.06.2021"
-    },
+## Erstellt von
+Corinna Sailer | MIB 4
